@@ -1,11 +1,12 @@
 /* @flow */
 
 import request from './request';
+import type { CacheHandler } from './create';
 
 export type Getter = (opts: void | Object | string) => Promise<*>;
 const ENDPOINT = 'https://api.gwentapi.com/v0';
 
-function createGetter(resource: string): Getter {
+function createGetter(resource: string, cache: CacheHandler): Getter {
   return function get(opts = {}) {
     if (Array.isArray(opts.results)) {
       return Promise.all(opts.results.map(get));
@@ -16,10 +17,10 @@ function createGetter(resource: string): Getter {
     }
 
     if (typeof opts === 'string') {
-      return request(opts);
+      return request(cache, opts);
     }
 
-    return request(`${ENDPOINT}/${resource}`, opts);
+    return request(cache, `${ENDPOINT}/${resource}`, opts);
   };
 }
 

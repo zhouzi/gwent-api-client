@@ -48,8 +48,27 @@ They all share the same signature:
 
 Have a look at [GwentAPI's documentation](https://gwentapi.com/) for more details.
 
+### Cache Handler
+
+To prevent flooding the Gwent API, `gwent-api-client` implements a memory cache by default.
+Feel free to use something else to persist cached data.
+
+Here's an example with localStorage:
+
+```js
+import GwentAPI from 'gwent-api-client';
+
+const client = GwentAPI.create({
+  cache: {
+      getItem: key => Promise.resolve(JSON.parse(localStorage.getItem(key))),
+      setItem: (key, value) => localStorage.setItem(key, JSON.stringify(value)),
+  },
+});
+```
+
 ## Changelog
 
 ### [0.1.0](https://github.com/Zhouzi/gwent-api-client/compare/...0.1.0) - Unreleased
 
 - Add wrappers for cards, leaders, categories, factions, groups and rarities
+- Add cache handler to avoid flooding Gwent API
