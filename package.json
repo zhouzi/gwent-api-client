@@ -1,6 +1,6 @@
 {
   "name": "gwent-api-client",
-  "version": "0.1.0",
+  "version": "0.0.0",
   "description": "HTTP client for the non-official Gwent API.",
   "main": "./dist/index.js",
   "scripts": {
@@ -9,7 +9,8 @@
     "test": "npm run types && npm run lint",
     "clean": "rm -rf dist",
     "prebuild": "npm run test && npm run clean",
-    "build": "babel src --out-dir dist"
+    "build": "babel src --out-dir dist",
+    "dev": "babel src --out-dir dist --watch"
   },
   "repository": {
     "type": "git",
@@ -37,5 +38,8 @@
     "eslint-plugin-flowtype": "^2.34.0",
     "eslint-plugin-import": "^2.2.0",
     "flow-bin": "^0.47.0"
+  },
+  "dependencies": {
+    "query-string": "^4.3.4"
   }
 }
