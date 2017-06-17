@@ -2,7 +2,7 @@
 /* global fetch */
 
 import queryString from 'query-string';
-import type { CacheHandler } from './create';
+import type { CacheHandler } from './createClient';
 
 function request(cache: CacheHandler, resource: string, opts?: Object): Promise<*> {
   const queryParams = queryString.stringify(opts);

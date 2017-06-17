@@ -1,7 +1,7 @@
 /* @flow */
 
-import createGetter from './createGetter';
-import type { Getter } from './createGetter';
+import createEndpoint from './createEndpoint';
+import type { Endpoint } from './createEndpoint';
 import memoryCache from './memoryCache';
 
 const resources = [
@@ -26,12 +26,12 @@ type APICreatorOptions = {
 };
 // eslint-disable-next-line no-use-before-define
 type APICreator = (APICreatorOptions) => API
-type API = { [string]: Getter | APICreator };
+type API = { [string]: Endpoint | APICreator };
 
-function create({ cache = memoryCache }: APICreatorOptions = {}): API {
+function createClient({ cache = memoryCache }: APICreatorOptions = {}): API {
   return resources.reduce((acc, resource) => Object.assign(acc, {
-    [getResourceName(resource)]: createGetter(resource, cache),
-  }), { create });
+    [getResourceName(resource)]: createEndpoint(resource, cache),
+  }), { createClient });
 }
 
-export default create();
+export default createClient;

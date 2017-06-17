@@ -1,1 +1,3 @@
-export { default } from './create';
+import createClient from './createClient';
+
+export default createClient();
