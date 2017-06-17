@@ -1,10 +1,8 @@
-/* @flow */
 /* global fetch */
 
 import queryString from 'query-string';
-import type { CacheHandler } from './createClient';
 
-function request(cache: CacheHandler, resource: string, opts?: Object): Promise<*> {
+function request(cache, resource, opts) {
   const queryParams = queryString.stringify(opts);
   const url =
     queryParams

@@ -1,12 +1,10 @@
-/* @flow */
-
 const cache = {};
 
-function getItem(key: string): Promise<*> {
+function getItem(key) {
   return Promise.resolve(cache[key]);
 }
 
-function setItem(key: string, value: *): void {
+function setItem(key, value) {
   cache[key] = value;
 }
 
