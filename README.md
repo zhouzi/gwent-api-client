@@ -68,6 +68,10 @@ const client = GwentAPI.create({
 
 ## Changelog
 
+### [0.2.0](https://github.com/Zhouzi/gwent-api-client/compare/0.1.0...0.2.0) - 2017-06-17
+
+- Fix package build
+
 ### [0.1.0](https://github.com/Zhouzi/gwent-api-client/compare/...0.1.0) - 2017-06-10
 
 - Add wrappers for cards, leaders, categories, factions, groups and rarities
