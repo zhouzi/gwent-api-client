@@ -10,7 +10,8 @@
     "clean": "rm -rf dist",
     "prebuild": "npm run test && npm run clean",
     "build": "babel src --out-dir dist",
-    "dev": "babel src --out-dir dist --watch"
+    "dev": "babel src --out-dir dist --watch",
+    "prepublish": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -24,6 +25,11 @@
   ],
   "author": "Gabin Aureche <hello@gabinaureche.com>",
   "license": "MIT",
+  "files": [
+    "dist",
+    "LICENSE",
+    "package.json"
+  ],
   "bugs": {
     "url": "https://github.com/Zhouzi/gwent-api-client/issues"
   },
