@@ -4,8 +4,9 @@
   "description": "HTTP client for the non-official Gwent API.",
   "main": "./dist/index.js",
   "scripts": {
+    "types": "flow",
     "lint": "eslint .",
-    "test": "npm run lint",
+    "test": "npm run types && npm run lint",
     "clean": "rm -rf dist",
     "prebuild": "npm run test && npm run clean",
     "build": "babel src --out-dir dist",
@@ -35,10 +36,14 @@
   "homepage": "https://github.com/Zhouzi/gwent-api-client",
   "devDependencies": {
     "babel-cli": "^6.24.1",
+    "babel-eslint": "^7.2.3",
     "babel-preset-es2015": "^6.24.1",
+    "babel-preset-flow": "^6.23.0",
     "eslint": "^3.19.0",
     "eslint-config-airbnb-base": "^11.2.0",
-    "eslint-plugin-import": "^2.2.0"
+    "eslint-plugin-flowtype": "^2.34.0",
+    "eslint-plugin-import": "^2.2.0",
+    "flow-bin": "^0.48.0"
   },
   "dependencies": {
     "query-string": "^4.3.4"
