@@ -229,7 +229,7 @@ GwentAPI.rarities.one({
 
 ## Changelog
 
-### [1.0.0](https://github.com/Zhouzi/gwent-api-client/compare/0.2.0...1.0.0) - Unreleased
+### [1.0.0](https://github.com/Zhouzi/gwent-api-client/compare/0.2.0...1.0.0) - 2017-06-21
 
 - Replace the unique methods (`cards()`, `leaders()`, ...) by `.list()` and `.one()`
 - Remove shorthand to load a list of items from a list
