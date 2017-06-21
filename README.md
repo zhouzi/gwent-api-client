@@ -2,8 +2,6 @@
 
 HTTP client for the [non-official Gwent API](https://gwentapi.com/).
 
-*As the current version 0.x suggests, this library is in active development. Its API is expected to change and break until a 1.x release.*
-
 ## Installation
 
 ```
@@ -228,7 +226,7 @@ GwentAPI.rarities.one({
 
 ## Changelog
 
-### [0.3.0](https://github.com/Zhouzi/gwent-api-client/compare/0.2.0...0.3.0) - Unreleased
+### [1.0.0](https://github.com/Zhouzi/gwent-api-client/compare/0.2.0...1.0.0) - Unreleased
 
 - Replace the unique methods (`cards()`, `leaders()`, ...) by `.list()` and `.one()`
 - Remove shorthand to load a list of items from a list
