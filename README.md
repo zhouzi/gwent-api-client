@@ -229,6 +229,11 @@ GwentAPI.rarities.one({
 
 ## Changelog
 
+### [1.0.1](https://github.com/Zhouzi/gwent-api-client/compare/1.0.0...1.0.1) - 2017-06-26
+
+- Fix fields parameter when provided with several fields
+- Fix cache to differentiate urls when requiring fields
+
 ### [1.0.0](https://github.com/Zhouzi/gwent-api-client/compare/0.2.0...1.0.0) - 2017-06-21
 
 - Replace the unique methods (`cards()`, `leaders()`, ...) by `.list()` and `.one()`
