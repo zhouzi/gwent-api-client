@@ -83,7 +83,7 @@ test.serial('should fetch the provided fields when they are array as well', asyn
   t.is(global.fetch.lastCall.args[0], '/variations/1');
 });
 
-test('should replace fields by their resulting data', async (t) => {
+test.serial('should replace fields by their resulting data', async (t) => {
   const res = await requestOne(t.context.cache, {
     href: '/some/url',
   }, {
@@ -98,7 +98,7 @@ test('should replace fields by their resulting data', async (t) => {
   t.deepEqual(actual, expected);
 });
 
-test('should replace fields by their resulting data when they are array as well', async (t) => {
+test.serial('should replace fields by their resulting data when they are array as well', async (t) => {
   const res = await requestOne(t.context.cache, {
     href: '/some/url',
   }, {
@@ -111,4 +111,29 @@ test('should replace fields by their resulting data when they are array as well'
   const expected = [t.context.variation];
 
   t.deepEqual(actual, expected);
+});
+
+test.serial('should add the fields to the url', async (t) => {
+  await requestOne(t.context.cache, {
+    href: '/some/url',
+  }, {
+    fields: [
+      'variations',
+    ],
+  });
+
+  t.is(global.fetch.firstCall.args[0], '/some/url?fields=variations');
+});
+
+test.serial('should sort the fields', async (t) => {
+  await requestOne(t.context.cache, {
+    href: '/some/url',
+  }, {
+    fields: [
+      'variations',
+      'faction',
+    ],
+  });
+
+  t.is(global.fetch.firstCall.args[0], '/some/url?fields=faction,variations');
 });
