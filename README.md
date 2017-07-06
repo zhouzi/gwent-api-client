@@ -1,7 +1,7 @@
 # gwent-api-client
 
 [![NPM version](https://badge.fury.io/js/gwent-api-client.svg)](http://badge.fury.io/js/gwent-api-client)
-[![Build Status](https://travis-ci.org/zhouzi/gwent-api-client.png?branch=master)](https://travis-ci.org/zhouzi/gwent-api-client)
+[![Build Status](https://travis-ci.org/Zhouzi/gwent-api-client.svg?branch=master)](https://travis-ci.org/zhouzi/gwent-api-client)
 
 HTTP client for the [non-official Gwent API](https://gwentapi.com/).
 
