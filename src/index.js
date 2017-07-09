@@ -1,5 +1,6 @@
 /* @flow */
 
+import 'isomorphic-fetch';
 import createClient from './createClient';
 
 export {
