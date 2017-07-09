@@ -229,6 +229,10 @@ GwentAPI.rarities.one({
 
 ## Changelog
 
+### [1.1.0](https://github.com/Zhouzi/gwent-api-client/compare/1.0.1...1.1.1) - 2017-07-09
+
+- Add NodeJS support
+
 ### [1.0.1](https://github.com/Zhouzi/gwent-api-client/compare/1.0.0...1.0.1) - 2017-06-26
 
 - Fix fields parameter when provided with several fields
