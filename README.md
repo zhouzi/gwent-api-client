@@ -27,9 +27,58 @@ GwentAPI
 
 ## Documentation
 
-## `createClient({ cache: CacheHandler }): Client`
+This library's main export is an object with a property for each of the [API endpoints](https://gwentapi.com/swagger/index.html).
+Each resources have two methods: `one()` and `list()`.
 
-Creates a new client with the provided cache handler.
+### one({ href: string }, { fields?: string[] })
+
+1. `{ href: string }` is an object returned by the API. They all have a `href` property pointing to the resource.
+2. `{ fields?: string[] }` fields is an array of path to the object's property. It offers a way to fetch further details about an object.
+
+As an example, the `fields` option lets you fetch the `variations` of a card like so:
+
+```js
+import GwentAPI from 'gwent-api-client';
+
+GwentAPI
+  // Will resolve to the card with all its variations loaded
+  .cards.one(card, { fields: ['variations'] });
+```
+
+### list(requestParameters)
+
+This method request resources to the relevant endpoint and pass through the request parameters.
+It means that everything in the `requestParameters` will be sent to the `API` along with the request.
+
+For example, you can fetch cards from a given offset to a given limit like so:
+
+```js
+import GwentAPI from 'gwent-api-client';
+
+GwentAPI
+  .cards.list({ offset: 10, limit: 20 });
+```
+
+Please find the API request parameters in the [API documentation](https://gwentapi.com/swagger/index.html).
+
+### Available endpoints
+
+* [`.cards.list()`](https://gwentapi.com/swagger/index.html#operation--v0-cards-get)
+* [`.cards.one()`](https://gwentapi.com/swagger/index.html#operation--v0-cards--cardID--get)
+* [`.leaders.list()`](https://gwentapi.com/swagger/index.html#operation--v0-cards-leaders-get)
+* [`.leaders.one()`](https://gwentapi.com/swagger/index.html#operation--v0-cards--cardID--get)
+* [`.categories.list()`](https://gwentapi.com/swagger/index.html#operation--v0-categories-get)
+* [`.categories.one()`](https://gwentapi.com/swagger/index.html#operation--v0-categories--categoryID--get)
+* [`.factions.list()`](https://gwentapi.com/swagger/index.html#operation--v0-factions-get)
+* [`.factions.one()`](https://gwentapi.com/swagger/index.html#operation--v0-factions--factionID--get)
+* [`.groups.list()`](https://gwentapi.com/swagger/index.html#operation--v0-groups-get)
+* [`.groups.one()`](https://gwentapi.com/swagger/index.html#operation--v0-groups--groupID--get)
+* [`.rarities.list()`](https://gwentapi.com/swagger/index.html#operation--v0-rarities-get)
+* [`.rarities.one()`](https://gwentapi.com/swagger/index.html#operation--v0-rarities--rarityID--get)
+
+### `createClient({ cache: CacheHandler }): Client`
+
+Also exported is this method that lets you create a client with a custom cache handler.
 In order to prevent flooding the Gwent API, please make sure to implement the cache handler that best suits your use case.
 
 The cache handler must have two methods:
@@ -50,180 +99,6 @@ const GwentAPI = createClient({
           return Promise.resolve(value);
       },
   },
-});
-```
-
-## `cards.list({ offset?: number, limit?: number }): Card[]`
-
-Fetch a list of cards starting from `offset` until `limit`.
-
-**Example:**
-
-```js
-import GwentAPI from 'gwent-api-client';
-
-GwentAPI.cards.list({
-  offset: 0,
-  limit: 20
-});
-```
-
-## `cards.one(card: Card, opts: { fields?: string[] }): Card`
-
-Fetch a card, optionally fetch the card's `fields`.
-
-**Example:**
-
-```js
-import GwentAPI from 'gwent-api-client';
-
-GwentAPI.cards.one({
-  href: '/url/to/card'
-});
-```
-
-## `leaders.list({ offset?: number, limit?: number }): Leader[]`
-
-Fetch a list of leaders starting from `offset` until `limit`.
-
-**Example:**
-
-```js
-import GwentAPI from 'gwent-api-client';
-
-GwentAPI.leaders.list({
-  offset: 0,
-  limit: 20
-});
-```
-
-## `leaders.one(leader: Leader, opts: { fields?: string[] }): Leader`
-
-Fetch a leader, optionally fetch the leader's `fields`.
-
-**Example:**
-
-```js
-import GwentAPI from 'gwent-api-client';
-
-GwentAPI.leaders.one({
-  href: '/url/to/leader'
-});
-```
-
-## `categories.list({ offset?: number, limit?: number }): Category[]`
-
-Fetch a list of categories starting from `offset` until `limit`.
-
-**Example:**
-
-```js
-import GwentAPI from 'gwent-api-client';
-
-GwentAPI.categories.list({
-  offset: 0,
-  limit: 20
-});
-```
-
-## `categories.one(category: Category, opts: { fields?: string[] }): Category`
-
-Fetch a category, optionally fetch the category's `fields`.
-
-**Example:**
-
-```js
-import GwentAPI from 'gwent-api-client';
-
-GwentAPI.categories.one({
-  href: '/url/to/category'
-});
-```
-
-## `factions.list({ offset?: number, limit?: number }): Faction[]`
-
-Fetch a list of factions starting from `offset` until `limit`.
-
-**Example:**
-
-```js
-import GwentAPI from 'gwent-api-client';
-
-GwentAPI.factions.list({
-  offset: 0,
-  limit: 20
-});
-```
-
-## `factions.one(faction: Faction, opts: { fields?: string[] }): Faction`
-
-Fetch a faction, optionally fetch the faction's `fields`.
-
-**Example:**
-
-```js
-import GwentAPI from 'gwent-api-client';
-
-GwentAPI.factions.one({
-  href: '/url/to/faction'
-});
-```
-
-## `groups.list({ offset?: number, limit?: number }): Group[]`
-
-Fetch a list of groups starting from `offset` until `limit`.
-
-**Example:**
-
-```js
-import GwentAPI from 'gwent-api-client';
-
-GwentAPI.groups.list({
-  offset: 0,
-  limit: 20
-});
-```
-
-## `groups.one(group: Group, opts: { fields?: string[] }): Group`
-
-Fetch a group, optionally fetch the group's `fields`.
-
-**Example:**
-
-```js
-import GwentAPI from 'gwent-api-client';
-
-GwentAPI.groups.one({
-  href: '/url/to/group'
-});
-```
-
-## `rarities.list({ offset?: number, limit?: number }): Rarity[]`
-
-Fetch a list of rarities starting from `offset` until `limit`.
-
-**Example:**
-
-```js
-import GwentAPI from 'gwent-api-client';
-
-GwentAPI.rarities.list({
-  offset: 0,
-  limit: 20
-});
-```
-
-## `rarities.one(rarity: Rarity, opts: { fields?: string[] }): Rarity`
-
-Fetch a rarity, optionally fetch the rarity's `fields`.
-
-**Example:**
-
-```js
-import GwentAPI from 'gwent-api-client';
-
-GwentAPI.rarities.one({
-  href: '/url/to/rarity'
 });
 ```
 
