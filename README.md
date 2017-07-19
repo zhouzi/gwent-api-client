@@ -30,12 +30,12 @@ GwentAPI
 This library's main export is an object with a property for each of the [API endpoints](https://gwentapi.com/swagger/index.html).
 Each resources have two methods: `one()` and `list()`.
 
-### one({ href: string }, { fields?: string[] })
+### `.<resource>.one({ href: string }, { fields?: string[] })`
 
 1. `{ href: string }` is an object returned by the API. They all have a `href` property pointing to the resource.
-2. `{ fields?: string[] }` fields is an array of path to the object's property. It offers a way to fetch further details about an object.
+2. `{ fields?: string[] }` fields is an array of paths to the object's properties. It offers a way to enrich an object by fetching properties that reference other resources.
 
-As an example, the `fields` option lets you fetch the `variations` of a card like so:
+For example, you can fetch the `variations` of a card like so:
 
 ```js
 import GwentAPI from 'gwent-api-client';
@@ -45,10 +45,10 @@ GwentAPI
   .cards.one(card, { fields: ['variations'] });
 ```
 
-### list(requestParameters)
+### `.<resource>.list(requestParameters)`
 
 This method request resources to the relevant endpoint and pass through the request parameters.
-It means that everything in the `requestParameters` will be sent to the `API` along with the request.
+It means that every properties of `requestParameters` will be passed as query parameters to the API.
 
 For example, you can fetch cards from a given offset to a given limit like so:
 
@@ -59,7 +59,7 @@ GwentAPI
   .cards.list({ offset: 10, limit: 20 });
 ```
 
-Please find the API request parameters in the [API documentation](https://gwentapi.com/swagger/index.html).
+Read more in the [API documentation](https://gwentapi.com/swagger/index.html).
 
 ### Available endpoints
 
@@ -78,7 +78,7 @@ Please find the API request parameters in the [API documentation](https://gwenta
 
 ### `createClient({ cache: CacheHandler }): Client`
 
-Also exported is this method that lets you create a client with a custom cache handler.
+Also exported is a method that lets you create a client with a custom cache handler.
 In order to prevent flooding the Gwent API, please make sure to implement the cache handler that best suits your use case.
 
 The cache handler must have two methods:
@@ -101,6 +101,8 @@ const GwentAPI = createClient({
   },
 });
 ```
+
+By default is implemented an in-memory cache handler.
 
 ## Changelog
 
