@@ -1,6 +1,6 @@
 /* @flow */
 
-import type { CacheHandler } from './request/request';
+import type { CacheHandler } from './types';
 
 function createDefaultCacheHandler(): CacheHandler {
   const cache = {};

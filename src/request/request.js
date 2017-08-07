@@ -2,11 +2,7 @@
 /* global fetch */
 
 import queryString from 'query-string';
-
-export type CacheHandler = {
-  getItem: (key: string) => Promise<*>,
-  setItem: (key: string, value: *) => Promise<*>,
-};
+import type { CacheHandler } from '../types';
 
 function request(
   cache: CacheHandler,

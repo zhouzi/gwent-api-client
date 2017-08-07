@@ -1,7 +1,7 @@
 /* @flow */
 
 import request from './request';
-import type { CacheHandler } from './request';
+import type { CacheHandler } from '../types';
 
 function fetchField(cache, item, field) {
   /* eslint-disable no-use-before-define */
