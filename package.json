@@ -55,7 +55,6 @@
     "sinon": "^2.3.5"
   },
   "dependencies": {
-    "isomorphic-fetch": "^2.2.1",
     "query-string": "^4.3.4"
   }
 }
