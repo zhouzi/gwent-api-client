@@ -22,7 +22,7 @@ GwentAPI
   .list({ offset: 0, limit: 20 })
 
   // fetch each cards in the list
-  .then(res => Promise.all(res.results.map(GwentAPI.cards.one)));
+  .then(res => GwentAPI.cards.map(res.results, GwentAPI.cards.one));
 ```
 
 ## Documentation
@@ -104,7 +104,29 @@ const GwentAPI = createClient({
 
 By default is implemented an in-memory cache handler.
 
+### `map(cards, client.cards.one): Promise`
+
+Request detailed resources for each items passed as first argument.
+This method is equivalent to a normal `.map` except it makes a maximum of 30 requests at a time and returns a promise out of the box.
+
+```js
+import GwentAPI from 'gwent-api-client';
+
+GwentAPI.cards
+  .list()
+  .then(res => GwentAPI.map(res.results, GwentAPI.cards.one))
+  .then((cards) => {
+    // resolves to fully loaded cards
+  });
+```
+
 ## Changelog
+
+### [2.0.0](https://github.com/Zhouzi/gwent-api-client/compare/1.1.1...2.0.0) - 2017-08-07
+
+- Add map to make a maximum of 30 requests at a time
+- Add support for the `If-Modified-Since` header
+- Remove fetch polyfill
 
 ### [1.1.0](https://github.com/Zhouzi/gwent-api-client/compare/1.0.1...1.1.1) - 2017-07-09
 
