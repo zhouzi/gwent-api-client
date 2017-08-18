@@ -1,45 +1,44 @@
 /* @flow */
 
 import request from './request';
-import type { CacheHandler } from '../types';
+import type { CacheHandler, APIItem } from '../types';
 
-function fetchField(cache, item, field) {
-  /* eslint-disable no-use-before-define */
-  const promise =
-    Array.isArray(item[field])
-      // item's field can be an array of items
-      ? Promise.all(item[field].map(f => requestOne(cache, f)))
-      // or an item
-      : requestOne(cache, item[field]);
-  /* eslint-enable no-use-before-define */
+function requestField(
+    cache: CacheHandler,
+    item: APIItem | APIItem[]
+): Promise<any> {
+    if (Array.isArray(item)) {
+        return Promise.all(item.map(entry => requestField(cache, entry)));
+    }
 
-  return promise.then(fieldData => ({
-    [field]: fieldData,
-  }));
+    return requestOne(cache, item);
+}
+
+function requestFields(
+    cache: CacheHandler,
+    item: APIItem,
+    fields: string[]
+): Promise<Object> {
+    return Promise.all(
+        fields
+            .filter(field => Object.prototype.hasOwnProperty.call(item, field))
+            .map(field =>
+                requestField(cache, item[field]).then(data => ({
+                    [field]: data
+                }))
+            )
+    ).then(loadedFields => Object.assign({}, item, ...loadedFields));
 }
 
 function requestOne(
-  cache: CacheHandler,
-  one: { href: string },
-  { fields = [] }: { fields?: string[] } = {},
-): Promise<*> {
-  const url =
-    fields.length
-      ? `${one.href}?fields=${fields.slice().sort().join(',')}`
-      : one.href;
-  return request(cache, url)
-    .then(item =>
-      Promise
-        // fetch all fields in parallel
-        .all(fields.map(field => fetchField(cache, item, field)))
-        // when they're all fetched, merge it with original data
-        .then(fieldsData =>
-          fieldsData.reduce((acc, fieldData) =>
-            Object.assign(acc, fieldData),
-            item,
-          ),
-        ),
-    );
+    cache: CacheHandler,
+    one: APIItem,
+    { fields = [] }: { fields?: string[] } = {}
+): Promise<Object> {
+    const url = fields.length
+        ? `${one.href}?fields=${fields.slice().sort().join(',')}`
+        : one.href;
+    return request(cache, url).then(item => requestFields(cache, item, fields));
 }
 
 export default requestOne;

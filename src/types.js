@@ -1,14 +1,18 @@
 /* @flow */
 
+export type APIItem = {
+    href: string
+};
+
 export type CacheHandler = {
-  getItem: (key: string) => Promise<*>,
-  setItem: (key: string, value: *) => Promise<*>,
+    getItem: (key: string) => Promise<*>,
+    setItem: (key: string, value: *) => Promise<*>
 };
 
 export type Client = {
-  [string]: *,
+    [string]: *
 };
 
 export type ClientOptions = {
-  cache: CacheHandler,
+    cache: CacheHandler
 };
