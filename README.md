@@ -145,9 +145,9 @@ GwentAPI.cards
 - [ ] Change `GwentAPI.map()`'s second argument (`request`) to be optional, defaults to `GwentAPI.one()` 
 - [ ] Change cache key generation to avoid requesting the API with irrelevant query parameters
 
-### [2.0.1](https://github.com/Zhouzi/gwent-api-client/compare/2.0.0...2.0.1) - Unreleased
+### [2.0.1](https://github.com/Zhouzi/gwent-api-client/compare/2.0.0...2.0.1) - 2017-08-18
 
-- [ ] Fix `GwentAPI.one()` fields option
+- Fix `GwentAPI.one()` fields option
 
 ### [2.0.0](https://github.com/Zhouzi/gwent-api-client/compare/1.1.1...2.0.0) - 2017-08-07
 
