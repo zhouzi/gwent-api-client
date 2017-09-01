@@ -122,29 +122,6 @@ GwentAPI.cards
 
 ## Changelog
 
-### [3.0.0](https://github.com/Zhouzi/gwent-api-client/compare/2.3.0...3.0.0) - Unreleased
-
-- [ ] Remove `GwentAPI.<resource>.list()`
-- [ ] Remove `GwentAPI.<resource>.one()`
-- [ ] Remove `GwentAPI.map()`
-
-### [2.3.0](https://github.com/Zhouzi/gwent-api-client/compare/2.2.0...2.3.0) - Unreleased
-
-- [ ] Add `GwentAPI.<resource>()` to replace `GwentAPI.<resource>.list()` in the future
-- [ ] Add deprecation warning when calling `GwentAPI.<resource>.list()`
-- [ ] Add `GwentAPI.one()` to replace `GwentAPI.<resource>.one()` in the future
-- [ ] Add deprecation warning when calling `GwentAPI.<resource>.one()`
-
-### [2.2.0](https://github.com/Zhouzi/gwent-api-client/compare/2.1.0...2.2.0) - Unreleased
-
-- [ ] Add a max parallel requests limit to all requests to remove `GwentAPI.map()` in the future
-- [ ] Add deprecation warning when calling `GwentAPI.map()`
-
-### [2.1.0](https://github.com/Zhouzi/gwent-api-client/compare/2.0.1...2.1.0) - Unreleased
-
-- [ ] Change `GwentAPI.map()`'s second argument (`request`) to be optional, defaults to `GwentAPI.one()` 
-- [ ] Change cache key generation to avoid requesting the API with irrelevant query parameters
-
 ### [2.0.1](https://github.com/Zhouzi/gwent-api-client/compare/2.0.0...2.0.1) - 2017-08-18
 
 - Fix `GwentAPI.one()` fields option
