@@ -47,28 +47,30 @@ function createClient(
         rarities: 'rarities'
     };
     return Object.keys(resources).reduce(
-        (acc, resource) =>
-            Object.assign(acc, {
-                [resource]: {
-                    list: (...args) => {
-                        console.warn(
-                            `gwent-api-client: ${resource}.list() is deprecated and will be removed in 3.0.0`
-                        );
-                        return requestList(
-                            options.cache,
-                            getURL(resources[resource]),
-                            ...args
-                        );
-                    },
-                    one: (...args) => {
-                        console.warn(
-                            `gwent-api-client: ${resource}.one() is deprecated and will be removed in 3.0.0`
-                        );
-                        return requestOne(options.cache, ...args);
-                    }
-                }
-            }),
-        { map }
+        (acc, resource) => {
+            const list = (...args) =>
+                requestList(
+                    options.cache,
+                    getURL(resources[resource]),
+                    ...args
+                );
+            list.list = (...args) => {
+                console.warn(
+                    `gwent-api-client: ${resource}.list() is deprecated and will be removed in 3.0.0`
+                );
+                return list(...args);
+            };
+            list.one = (...args) => {
+                console.warn(
+                    `gwent-api-client: ${resource}.one() is deprecated and will be removed in 3.0.0`
+                );
+                return requestOne(options.cache, ...args);
+            };
+            return Object.assign(acc, {
+                [resource]: list
+            });
+        },
+        { map, one: (...args) => requestOne(options.cache, ...args) }
     );
 }
 

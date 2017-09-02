@@ -12,6 +12,10 @@ const resources = {
 };
 const client = createClient();
 
+test('should expose a "one" method', t => {
+    t.truthy(client.one, '.one()');
+});
+
 test('should expose a "one" method for each supported resources', t => {
     Object.keys(resources).forEach(resource =>
         t.truthy(client[resource].one, `${resource}.one()`)
@@ -28,6 +32,10 @@ test.serial(
         await Object.keys(resources).reduce(
             (promise, resource) =>
                 promise
+                    .then(() => client[resource]())
+                    .then(() =>
+                        t.is(global.fetch.lastCall.args[0], resources[resource])
+                    )
                     .then(() => client[resource].list())
                     .then(() =>
                         t.is(global.fetch.lastCall.args[0], resources[resource])
