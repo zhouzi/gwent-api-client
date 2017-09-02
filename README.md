@@ -122,6 +122,12 @@ GwentAPI.cards
 
 ## Changelog
 
+### [2.1.0](https://github.com/Zhouzi/gwent-api-client/compare/2.0.1...2.1.0) - Unreleased
+
+- Add deprecation warning when calling <resource>.one(), <resource>.list(), .map() and using options.cache
+- Add <resource>() as a replacement for <resource>.list()
+- Add .one() as a replacement for <resource>.one()
+
 ### [2.0.1](https://github.com/Zhouzi/gwent-api-client/compare/2.0.0...2.0.1) - 2017-08-18
 
 - Fix `GwentAPI.one()` fields option
