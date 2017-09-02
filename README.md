@@ -42,7 +42,7 @@ import GwentAPI from 'gwent-api-client';
 
 GwentAPI
   // Will resolve to the card with all its variations loaded
-  .cards.one(card, { fields: ['variations'] });
+  .one(card, { fields: ['variations'] });
 ```
 
 ### `GwentAPI.<resource>(requestParameters?: Object)`
