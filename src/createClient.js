@@ -9,6 +9,9 @@ const APIRootURL = 'https://api.gwentapi.com/v0';
 const MAX_PARALLEL_REQUESTS = 30;
 
 function map(items, request) {
+    console.warn(
+        'gwent-api-client: .map() is deprecated and will be removed in 3.0.0'
+    );
     const tasks = items.map(item => callback =>
         request(item)
             .then(json => callback(null, json))
@@ -32,6 +35,9 @@ function getURL(resource: string): string {
 function createClient(
     options: ClientOptions = { cache: defaultCacheHandler }
 ): Client {
+    console.warn(
+        'gwent-api-client: options.cache is deprecated and will be removed in 3.0.0'
+    );
     const resources = {
         cards: 'cards',
         leaders: 'cards/leaders',
@@ -44,12 +50,22 @@ function createClient(
         (acc, resource) =>
             Object.assign(acc, {
                 [resource]: {
-                    list: requestList.bind(
-                        null,
-                        options.cache,
-                        getURL(resources[resource])
-                    ),
-                    one: requestOne.bind(null, options.cache)
+                    list: (...args) => {
+                        console.warn(
+                            `gwent-api-client: ${resource}.list() is deprecated and will be removed in 3.0.0`
+                        );
+                        return requestList(
+                            options.cache,
+                            getURL(resources[resource]),
+                            ...args
+                        );
+                    },
+                    one: (...args) => {
+                        console.warn(
+                            `gwent-api-client: ${resource}.one() is deprecated and will be removed in 3.0.0`
+                        );
+                        return requestOne(options.cache, ...args);
+                    }
                 }
             }),
         { map }
