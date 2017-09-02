@@ -1,7 +1,7 @@
 {
   "name": "gwent-api-client",
-  "version": "2.0.1",
-  "description": "HTTP client for the non-official Gwent API.",
+  "version": "2.1.0",
+  "description": "JavaScript client for Gwent API.",
   "main": "./dist/index.js",
   "scripts": {
     "types": "flow",

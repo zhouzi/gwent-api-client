@@ -3,7 +3,7 @@
 [![NPM version](https://badge.fury.io/js/gwent-api-client.svg)](http://badge.fury.io/js/gwent-api-client)
 [![Build Status](https://travis-ci.org/Zhouzi/gwent-api-client.svg?branch=master)](https://travis-ci.org/zhouzi/gwent-api-client)
 
-HTTP client for the [non-official Gwent API](https://gwentapi.com/).
+JavaScript client for [Gwent API](https://gwentapi.com/).
 
 ## Installation
 
@@ -18,24 +18,24 @@ import GwentAPI from 'gwent-api-client';
 
 GwentAPI
   // fetch the first 20 cards
-  .cards
-  .list({ offset: 0, limit: 20 })
+  .cards({ offset: 0, limit: 20 })
 
   // fetch each cards in the list
-  .then(res => GwentAPI.cards.map(res.results, GwentAPI.cards.one));
+  .then(res => Promise.all(res.results.map(GwentAPI.one)));
 ```
 
 ## Documentation
 
-This library's main export is an object with a property for each of the [API endpoints](https://gwentapi.com/swagger/index.html).
-Each resources have two methods: `one()` and `list()`.
+The client exports convenient methods to request [Gwent API](https://gwentapi.com/).
+You will find a method for each [API endpoints](https://gwentapi.com/swagger/index.html).
 
-### `.<resource>.one({ href: string }, { fields?: string[] })`
+### `GwentAPI.one({ href: string }, { fields?: string[] })`
 
-1. `{ href: string }` is an object returned by the API. They all have a `href` property pointing to the resource.
-2. `{ fields?: string[] }` fields is an array of paths to the object's properties. It offers a way to enrich an object by fetching properties that reference other resources.
+1. `{ href: string }` is the structure of an item returned by Gwent API. You can pass it directly to this method to fetch it.
+2. `{ fields?: string[] }` array of properties to fetch.
 
-For example, you can fetch the `variations` of a card like so:
+For example, if you need the card arts you must fetch the `variations` list.
+You can do so as follows:
 
 ```js
 import GwentAPI from 'gwent-api-client';
@@ -45,10 +45,19 @@ GwentAPI
   .cards.one(card, { fields: ['variations'] });
 ```
 
-### `.<resource>.list(requestParameters)`
+### `GwentAPI.<resource>(requestParameters?: Object)`
 
-This method request resources to the relevant endpoint and pass through the request parameters.
-It means that every properties of `requestParameters` will be passed as query parameters to the API.
+Where `<resource>` is one of:
+
+* [cards](https://gwentapi.com/swagger/index.html#operation--v0-cards-get)
+* [leaders](https://gwentapi.com/swagger/index.html#operation--v0-cards-leaders-get)
+* [categories](https://gwentapi.com/swagger/index.html#operation--v0-categories-get)
+* [factions](https://gwentapi.com/swagger/index.html#operation--v0-factions-get)
+* [groups](https://gwentapi.com/swagger/index.html#operation--v0-groups-get)
+* [rarities](https://gwentapi.com/swagger/index.html#operation--v0-rarities-get)
+
+This method request the relevant endpoint and simply pass through the request parameters as query parameters.
+Please see [Gwent API documentation](https://gwentapi.com/swagger/index.html) for more details on the available options.
 
 For example, you can fetch cards from a given offset to a given limit like so:
 
@@ -56,77 +65,16 @@ For example, you can fetch cards from a given offset to a given limit like so:
 import GwentAPI from 'gwent-api-client';
 
 GwentAPI
-  .cards.list({ offset: 10, limit: 20 });
-```
-
-Read more in the [API documentation](https://gwentapi.com/swagger/index.html).
-
-### Available endpoints
-
-* [`.cards.list()`](https://gwentapi.com/swagger/index.html#operation--v0-cards-get)
-* [`.cards.one()`](https://gwentapi.com/swagger/index.html#operation--v0-cards--cardID--get)
-* [`.leaders.list()`](https://gwentapi.com/swagger/index.html#operation--v0-cards-leaders-get)
-* [`.leaders.one()`](https://gwentapi.com/swagger/index.html#operation--v0-cards--cardID--get)
-* [`.categories.list()`](https://gwentapi.com/swagger/index.html#operation--v0-categories-get)
-* [`.categories.one()`](https://gwentapi.com/swagger/index.html#operation--v0-categories--categoryID--get)
-* [`.factions.list()`](https://gwentapi.com/swagger/index.html#operation--v0-factions-get)
-* [`.factions.one()`](https://gwentapi.com/swagger/index.html#operation--v0-factions--factionID--get)
-* [`.groups.list()`](https://gwentapi.com/swagger/index.html#operation--v0-groups-get)
-* [`.groups.one()`](https://gwentapi.com/swagger/index.html#operation--v0-groups--groupID--get)
-* [`.rarities.list()`](https://gwentapi.com/swagger/index.html#operation--v0-rarities-get)
-* [`.rarities.one()`](https://gwentapi.com/swagger/index.html#operation--v0-rarities--rarityID--get)
-
-### `createClient({ cache: CacheHandler }): Client`
-
-Also exported is a method that lets you create a client with a custom cache handler.
-In order to prevent flooding the Gwent API, please make sure to implement the cache handler that best suits your use case.
-
-The cache handler must have two methods:
-
-* `getItem(key: string): Promise<*>` the promise should resolve to the resource or `null`.
-* `setItem(key: string, value: any): Promise<*>` should store `value` in the cache.
-
-Here's an example implementing localStorage:
-
-```js
-import { createClient } from 'gwent-api-client';
-
-const GwentAPI = createClient({
-  cache: {
-      getItem: key => Promise.resolve(JSON.parse(localStorage.getItem(key))),
-      setItem: (key, value) => {
-          localStorage.setItem(key, JSON.stringify(value));
-          return Promise.resolve(value);
-      },
-  },
-});
-```
-
-By default is implemented an in-memory cache handler.
-
-### `map(cards, client.cards.one): Promise`
-
-Request detailed resources for each items passed as first argument.
-This method is equivalent to a normal `.map` except it makes a maximum of 30 requests at a time and returns a promise out of the box.
-
-```js
-import GwentAPI from 'gwent-api-client';
-
-GwentAPI.cards
-  .list()
-  .then(res => GwentAPI.map(res.results, GwentAPI.cards.one))
-  .then((cards) => {
-    // resolves to fully loaded cards
-  });
+  .cards({ offset: 10, limit: 20 });
 ```
 
 ## Changelog
 
-### [2.1.0](https://github.com/Zhouzi/gwent-api-client/compare/2.0.1...2.1.0) - Unreleased
+### [2.1.0](https://github.com/Zhouzi/gwent-api-client/compare/2.0.1...2.1.0) - 2017-09-02
 
-- Add deprecation warning when calling <resource>.one(), <resource>.list(), .map() and using options.cache
-- Add <resource>() as a replacement for <resource>.list()
-- Add .one() as a replacement for <resource>.one()
+- Add deprecation warning when calling `<resource>.one()`, `<resource>.list()`, `.map()` and using `options.cache`
+- Add `<resource>()` as a replacement for `<resource>.list()`
+- Add `.one()` as a replacement for `<resource>.one()`
 
 ### [2.0.1](https://github.com/Zhouzi/gwent-api-client/compare/2.0.0...2.0.1) - 2017-08-18
 
