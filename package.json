@@ -52,7 +52,6 @@
     "sinon": "^2.3.5"
   },
   "dependencies": {
-    "async.parallellimit": "^0.5.2",
     "query-string": "^4.3.4"
   }
 }
