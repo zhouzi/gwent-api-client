@@ -1,29 +1,22 @@
 /* @flow */
 
 import request from './request';
-import type { CacheHandler, APIItem } from '../types';
+import type { APIItem } from '../types';
 
-function requestField(
-    cache: CacheHandler,
-    item: APIItem | APIItem[]
-): Promise<any> {
+function requestField(item: APIItem | APIItem[]): Promise<any> {
     if (Array.isArray(item)) {
-        return Promise.all(item.map(entry => requestField(cache, entry)));
+        return Promise.all(item.map(entry => requestField(entry)));
     }
 
-    return requestOne(cache, item);
+    return requestOne(item);
 }
 
-function requestFields(
-    cache: CacheHandler,
-    item: APIItem,
-    fields: string[]
-): Promise<Object> {
+function requestFields(item: APIItem, fields: string[]): Promise<Object> {
     return Promise.all(
         fields
             .filter(field => Object.prototype.hasOwnProperty.call(item, field))
             .map(field =>
-                requestField(cache, item[field]).then(data => ({
+                requestField(item[field]).then(data => ({
                     [field]: data
                 }))
             )
@@ -31,14 +24,10 @@ function requestFields(
 }
 
 function requestOne(
-    cache: CacheHandler,
     one: APIItem,
     { fields = [] }: { fields?: string[] } = {}
 ): Promise<Object> {
-    const url = fields.length
-        ? `${one.href}?fields=${fields.slice().sort().join(',')}`
-        : one.href;
-    return request(cache, url).then(item => requestFields(cache, item, fields));
+    return request(one.href).then(item => requestFields(item, fields));
 }
 
 export default requestOne;

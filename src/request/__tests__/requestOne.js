@@ -1,12 +1,10 @@
 import test from 'ava';
 import sinon from 'sinon';
-import { createDefaultCacheHandler } from '../../defaultCacheHandler';
 import requestOne from '../requestOne';
 
 test.beforeEach(t => {
     /* eslint-disable no-param-reassign */
 
-    t.context.cache = createDefaultCacheHandler();
     t.context.card = {
         uuid: '1',
         faction: {
@@ -48,7 +46,7 @@ test.beforeEach(t => {
 });
 
 test.serial('should fetch the item', async t => {
-    await requestOne(t.context.cache, {
+    await requestOne({
         href: '/cards/1'
     });
 
@@ -57,7 +55,6 @@ test.serial('should fetch the item', async t => {
 
 test.serial('should fetch the provided fields', async t => {
     await requestOne(
-        t.context.cache,
         {
             href: '/cards/1'
         },
@@ -73,7 +70,6 @@ test.serial(
     'should fetch the provided fields when they are array as well',
     async t => {
         await requestOne(
-            t.context.cache,
             {
                 href: '/cards/1'
             },
@@ -88,7 +84,6 @@ test.serial(
 
 test.serial('should replace fields by their resulting data', async t => {
     const res = await requestOne(
-        t.context.cache,
         {
             href: '/cards/1'
         },
@@ -107,7 +102,6 @@ test.serial(
     'should replace fields by their resulting data when they are array as well',
     async t => {
         const res = await requestOne(
-            t.context.cache,
             {
                 href: '/cards/1'
             },
@@ -123,9 +117,8 @@ test.serial(
     }
 );
 
-test.serial('should add the fields to the url', async t => {
+test.serial('should not add the fields to the url', async t => {
     await requestOne(
-        t.context.cache,
         {
             href: '/cards/1'
         },
@@ -134,28 +127,13 @@ test.serial('should add the fields to the url', async t => {
         }
     );
 
-    t.is(global.fetch.firstCall.args[0], '/cards/1?fields=variations');
-});
-
-test.serial('should sort the fields', async t => {
-    await requestOne(
-        t.context.cache,
-        {
-            href: '/cards/1'
-        },
-        {
-            fields: ['variations', 'faction']
-        }
-    );
-
-    t.is(global.fetch.firstCall.args[0], '/cards/1?fields=faction,variations');
+    t.is(global.fetch.firstCall.args[0], '/cards/1');
 });
 
 test.serial(
     'should replace fields with their resulting data for multiple fields',
     async t => {
         const actual = await requestOne(
-            t.context.cache,
             {
                 href: '/cards/1'
             },
@@ -186,7 +164,6 @@ test.serial('should not fetch missing fields', async t => {
     });
 
     const actual = await requestOne(
-        t.context.cache,
         {
             href: '/cards/1'
         },
