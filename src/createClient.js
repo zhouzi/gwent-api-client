@@ -6,7 +6,7 @@ import type { Client } from './types';
 const APIRootURL = 'https://api.gwentapi.com/v0';
 
 function getURL(resource: string): string {
-    return `${APIRootURL}/${resource}/`;
+    return `${APIRootURL}/${resource}`;
 }
 
 function createClient(): Client {
