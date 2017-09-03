@@ -19,25 +19,10 @@ function createClient(): Client {
         rarities: 'rarities'
     };
     return Object.keys(resources).reduce(
-        (acc, resource) => {
-            const list = (...args) =>
-                requestList(getURL(resources[resource]), ...args);
-            list.list = (...args) => {
-                console.warn(
-                    `gwent-api-client: ${resource}.list() is deprecated and will be removed in 3.0.0`
-                );
-                return list(...args);
-            };
-            list.one = (...args) => {
-                console.warn(
-                    `gwent-api-client: ${resource}.one() is deprecated and will be removed in 3.0.0`
-                );
-                return requestOne(...args);
-            };
-            return Object.assign(acc, {
-                [resource]: list
-            });
-        },
+        (acc, resource) =>
+            Object.assign(acc, {
+                [resource]: requestList.bind(null, getURL(resources[resource]))
+            }),
         { one: requestOne }
     );
 }

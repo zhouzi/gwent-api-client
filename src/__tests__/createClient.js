@@ -16,12 +16,6 @@ test('should expose a "one" method', t => {
     t.truthy(client.one, '.one()');
 });
 
-test('should expose a "one" method for each supported resources', t => {
-    Object.keys(resources).forEach(resource =>
-        t.truthy(client[resource].one, `${resource}.one()`)
-    );
-});
-
 test.serial(
     'should call the relevant endpoint for each supported resources',
     async t => {
@@ -35,18 +29,8 @@ test.serial(
                     .then(() => client[resource]())
                     .then(() =>
                         t.is(global.fetch.lastCall.args[0], resources[resource])
-                    )
-                    .then(() => client[resource].list())
-                    .then(() =>
-                        t.is(global.fetch.lastCall.args[0], resources[resource])
                     ),
             Promise.resolve()
         );
     }
 );
-
-test('should expose a "list" method for each supported resources', t => {
-    Object.keys(resources).forEach(resource =>
-        t.truthy(client[resource].list, `${resource}.list()`)
-    );
-});
