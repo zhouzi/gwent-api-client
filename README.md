@@ -94,6 +94,13 @@ Also exported are a set of useful helpers:
 
 ## Changelog
 
+### [3.0.0](https://github.com/Zhouzi/gwent-api-client/compare/2.1.0...3.0.0) - 2017-09-03
+
+- Remove `.map()`
+- Remove `<resource>.one()` and `<resource>.list()` (use `<resource>()` and `one()` instead)
+- Remove cache handler
+- Add helpers
+
 ### [2.1.0](https://github.com/Zhouzi/gwent-api-client/compare/2.0.1...2.1.0) - 2017-09-02
 
 - Add deprecation warning when calling `<resource>.one()`, `<resource>.list()`, `.map()` and using `options.cache`
