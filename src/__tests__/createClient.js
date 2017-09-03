@@ -3,12 +3,12 @@ import sinon from 'sinon';
 import createClient from '../createClient';
 
 const resources = {
-    cards: 'https://api.gwentapi.com/v0/cards/',
-    leaders: 'https://api.gwentapi.com/v0/cards/leaders/',
-    categories: 'https://api.gwentapi.com/v0/categories/',
-    factions: 'https://api.gwentapi.com/v0/factions/',
-    groups: 'https://api.gwentapi.com/v0/groups/',
-    rarities: 'https://api.gwentapi.com/v0/rarities/'
+    cards: 'https://api.gwentapi.com/v0/cards',
+    leaders: 'https://api.gwentapi.com/v0/cards/leaders',
+    categories: 'https://api.gwentapi.com/v0/categories',
+    factions: 'https://api.gwentapi.com/v0/factions',
+    groups: 'https://api.gwentapi.com/v0/groups',
+    rarities: 'https://api.gwentapi.com/v0/rarities'
 };
 const client = createClient();
 
