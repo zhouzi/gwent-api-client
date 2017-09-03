@@ -68,6 +68,30 @@ GwentAPI
   .cards({ offset: 10, limit: 20 });
 ```
 
+### Helpers
+
+Also exported are a set of useful helpers:
+
+* `GwentAPI.getFaction(card)`: returns the card's faction
+* `GwentAPI.isMonster(card)`: returns true if card is of Monster faction
+* `GwentAPI.isNeutral(card)`: returns true if card is of Neutral faction
+* `GwentAPI.isNilfgaard(card)`: returns true if card is of Nilfgaard faction
+* `GwentAPI.isNorthernRealms(card)`: returns true if card is of Northern Realms faction
+* `GwentAPI.isScoiatael(card)`: returns true if card is of Scoia'tael faction
+* `GwentAPI.isSkellige(card)`: returns true if card is of Skellige faction
+
+* `GwentAPI.Rarity(card)`: returns the card's rarity
+* `GwentAPI.isCommon(card)`: returns true if card is common
+* `GwentAPI.isEpic(card)`: returns true if card is common
+* `GwentAPI.isLegendary(card)`: returns true if card is legendary
+* `GwentAPI.isRare(card)`: returns true if card is rare
+
+* `GwentAPI.Rarity(card)`: returns the card's group
+* `GwentAPI.isBronze(card)`: returns true if card is bronze
+* `GwentAPI.isGold(card)`: returns true if card is gold
+* `GwentAPI.isLeader(card)`: returns true if card is leader
+* `GwentAPI.isSilver(card)`: returns true if card is silver
+
 ## Changelog
 
 ### [2.1.0](https://github.com/Zhouzi/gwent-api-client/compare/2.0.1...2.1.0) - 2017-09-02

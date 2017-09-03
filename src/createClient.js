@@ -1,6 +1,7 @@
 /* @flow */
 
 import { requestList, requestOne } from './request';
+import * as helpers from './helpers';
 import type { Client } from './types';
 
 const APIRootURL = 'https://api.gwentapi.com/v0';
@@ -23,7 +24,7 @@ function createClient(): Client {
             Object.assign(acc, {
                 [resource]: requestList.bind(null, getURL(resources[resource]))
             }),
-        { one: requestOne }
+        Object.assign({}, { one: requestOne }, helpers)
     );
 }
 
