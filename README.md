@@ -1,3 +1,7 @@
+# This project is deprecated
+
+⚠️ The Gwent API is not maintained anymore. Have a look at [GwentCommunityDevelopers](https://github.com/GwentCommunityDevelopers) for more resources. ⚠️
+
 # gwent-api-client
 
 [![NPM version](https://badge.fury.io/js/gwent-api-client.svg)](http://badge.fury.io/js/gwent-api-client)
