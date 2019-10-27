@@ -1,6 +1,6 @@
-# This project is deprecated
+⚠️ The Gwent API is not maintained anymore, which makes this library pointless. Have a look at [GwentCommunityDevelopers](https://github.com/GwentCommunityDevelopers) for more resources. ⚠️
 
-⚠️ The Gwent API is not maintained anymore. Have a look at [GwentCommunityDevelopers](https://github.com/GwentCommunityDevelopers) for more resources. ⚠️
+<details>
 
 # gwent-api-client
 
@@ -145,3 +145,5 @@ Also exported are a set of useful helpers:
 
 - Add wrappers for cards, leaders, categories, factions, groups and rarities
 - Add cache handler to avoid flooding Gwent API
+
+</details>
